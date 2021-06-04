@@ -778,7 +778,7 @@ def run_validator_for_fhir_type(model_type_cls, v, values, config, field):
 def fhir_model_validator(
     model_name: str, v: Union[StrBytes, dict, Path, FHIRAbstractModel]
 ):
-    """ """
+    """ """ 
     if typing.TYPE_CHECKING:
         model_class: typing.Union[
             typing.Type[BaseModel], typing.Type[FHIRAbstractModel]

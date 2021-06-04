@@ -12,7 +12,8 @@ from pydantic import Field, root_validator
 from pydantic.error_wrappers import ErrorWrapper, ValidationError
 from pydantic.errors import MissingError, NoneIsNotAllowedError
 
-from . import backboneelement, domainresource, fhirtypes
+from . import backboneelement, domainresource, fhirtypes, validators
+from .extensions import uscore
 
 
 class Patient(domainresource.DomainResource):
@@ -24,7 +25,6 @@ class Patient(domainresource.DomainResource):
     Demographics and other administrative information about an individual or
     animal receiving care or other health-related services.
     """
-
     resource_type = Field("Patient", const=True)
 
     active: bool = Field(
@@ -66,6 +66,15 @@ class Patient(domainresource.DomainResource):
     birthDate__ext: fhirtypes.FHIRPrimitiveExtensionType = Field(
         None, alias="_birthDate", title="Extension field for ``birthDate``."
     )
+    
+    # birthSex: uscore.BirthSex = Field(
+    #     None,
+    #     alias="birthSex",
+    #     title="The birth sex for the individual",
+    #     description=None,
+    #     # if property is element of this resource.
+    #     element_property=True,
+    # )
 
     communication: typing.List[fhirtypes.PatientCommunicationType] = Field(
         None,
@@ -130,6 +139,7 @@ class Patient(domainresource.DomainResource):
         ),
         # if property is element of this resource.
         element_property=True,
+        element_required=True,
         # note: Enum values can be used in validation,
         # but use in your own responsibilities, read official FHIR documentation.
         enum_values=["male", "female", "other", "unknown"],
@@ -156,6 +166,7 @@ class Patient(domainresource.DomainResource):
         description=None,
         # if property is element of this resource.
         element_property=True,
+        element_required=True,
     )
 
     link: typing.List[fhirtypes.PatientLinkType] = Field(
@@ -187,6 +198,7 @@ class Patient(domainresource.DomainResource):
         description="This field contains a patient's most recent marital (civil) status.",
         # if property is element of this resource.
         element_property=True,
+        enum_values = ['A', 'D', 'I', 'L', 'M', 'P', 'S', 'T', 'U', 'W', 'UNK']
     )
 
     multipleBirthBoolean: bool = Field(
@@ -362,6 +374,13 @@ class PatientCommunication(backboneelement.BackboneElement):
         ),
         # if property is element of this resource.
         element_property=True,
+        enum_values=['ar', 'bn', 'cs', 'da', 'de', 'de-AT', 'de-CH', 'de-DE', 
+            'el', 'en', 'en-AU', 'en-CA', 'en-GB', 'en-IN', 'en-NZ', 'en-SG', 
+            'en-US', 'es', 'es-AR', 'es-ES', 'es-UY', 'fi', 'fr', 'fr-BE',
+            'fr-CH', 'fr-FR', 'fy', 'fy-NL', 'hi', 'hr', 'it', 'it-CH',
+            'it-IT', 'ja', 'ko', 'nl', 'nl-BE', 'nl-NL', 'no', 'no-NO',
+            'pa', 'pl', 'pt', 'pt-BR', 'ru',  'ru-RU', 'sr', 'sr-RS', 'sv',
+            'sv-SE', 'te', 'zh', 'zh-CN', 'zh-HK', 'zh-SG', 'zh-TW']
     )
 
     preferred: bool = Field(
@@ -470,6 +489,7 @@ class PatientContact(backboneelement.BackboneElement):
         ),
         # if property is element of this resource.
         element_property=True,
+        enum_values =['C', 'E', 'F', 'I', 'N', 'S', 'U']
     )
 
     telecom: typing.List[fhirtypes.ContactPointType] = Field(

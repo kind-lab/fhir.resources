@@ -6,9 +6,9 @@ Version: 4.0.1
 Build ID: 9346c8cc45
 Last updated: 2019-11-01T09:29:23.356+11:00
 """
-from pydantic import Field
+from pydantic import Field, root_validator
 
-from . import element, fhirtypes
+from . import element, fhirtypes, validators
 
 
 class Identifier(element.Element):
@@ -53,6 +53,7 @@ class Identifier(element.Element):
         ),
         # if property is element of this resource.
         element_property=True,
+        element_required=True
     )
     system__ext: fhirtypes.FHIRPrimitiveExtensionType = Field(
         None, alias="_system", title="Extension field for ``system``."
@@ -68,6 +69,9 @@ class Identifier(element.Element):
         ),
         # if property is element of this resource.
         element_property=True,
+        enum_values=['DL', 'PPN', 'BRN', 'MR', 'MCN', 'EN', 'TAX', 'NIIP',
+                   'PRN', 'MD', 'DR', 'ACSN', 'UDI', 'SNO', 'SB', 'PLAC',
+                   'FILL', 'JHN']
     )
 
     use: fhirtypes.Code = Field(
@@ -79,7 +83,7 @@ class Identifier(element.Element):
         element_property=True,
         # note: Enum values can be used in validation,
         # but use in your own responsibilities, read official FHIR documentation.
-        enum_values=["usual", "official", "temp", "secondary", "old"],
+        enum_values=["usual", "common", "temp", "secondary", "old"],
     )
     use__ext: fhirtypes.FHIRPrimitiveExtensionType = Field(
         None, alias="_use", title="Extension field for ``use``."
@@ -95,6 +99,7 @@ class Identifier(element.Element):
         ),
         # if property is element of this resource.
         element_property=True,
+        element_required=True
     )
     value__ext: fhirtypes.FHIRPrimitiveExtensionType = Field(
         None, alias="_value", title="Extension field for ``value``."

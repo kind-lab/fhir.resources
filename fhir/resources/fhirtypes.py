@@ -601,7 +601,6 @@ def get_fhir_type_class(model_name):
 
 class AbstractType(dict):
     """ """
-
     __fhir_release__: str = "R4"
     __resource_type__: str = ...  # type: ignore
 
@@ -612,7 +611,6 @@ class AbstractType(dict):
     @classmethod
     def __get_validators__(cls) -> "CallableGenerator":
         from . import fhirtypesvalidators
-
         yield getattr(fhirtypesvalidators, cls.__resource_type__.lower() + "_validator")
 
     @classmethod
@@ -676,6 +674,7 @@ class AbstractBaseType(dict):
 
     @classmethod
     def fhir_type_name(cls) -> str:
+        print('in fhir_type_name')
         """ """
         return cls.__resource_type__
 

@@ -18,6 +18,7 @@ from pydantic.parse import Protocol
 from pydantic.utils import ROOT_KEY, sequence_like
 
 from fhir.resources.utils import load_file, load_str_bytes, xml_dumps, yaml_dumps
+from . import validators
 
 try:
     import orjson
@@ -103,6 +104,15 @@ class FHIRAbstractModel(BaseModel, abc.ABC):
             raise ValidationError(errors, __pydantic_self__.__class__)
 
         BaseModel.__init__(__pydantic_self__, **data)
+        
+    @root_validator(allow_reuse=True)
+    def validate_elements(cls, values):
+        """ First validate if element is required and present 
+            Second validate if the value entered is within a list of 
+            values (if specified)
+        """
+        validators.validate_elements(cls,values) 
+        return values
 
     @classmethod
     def add_root_validator(
