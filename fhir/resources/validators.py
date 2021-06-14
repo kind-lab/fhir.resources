@@ -20,7 +20,13 @@ def _validate_enum_values(cls, values, errs):
              (values[field] is not None)):
              enum_values = cls.__fields__[field].field_info.extra['enum_values']
              if values[field] not in enum_values:
-                 errs.append(ValueError(f"Invalid gender given: {values[field]}"))
+                 errs.append(ValueError(f"Invalid {cls} given: {values[field]}"))
+         elif (('enum_code_values' in cls.__fields__[field].field_info.extra) & 
+             (values[field] is not None)):
+             enum_code_values = cls.__fields__[field].field_info.extra['enum_code_values']
+             for coding in values[field].coding:
+                 if coding.code not in enum_code_values:
+                     errs.append(ValueError(f"Invalid code for {cls} given: {coding.code}"))
     return errs
 
 def _validate_required(cls, values, errs):
@@ -29,6 +35,7 @@ def _validate_required(cls, values, errs):
          if 'element_required' in cls.__fields__[field].field_info.extra:
              required = cls.__fields__[field].field_info.extra['element_required']
              if required & (values[field] is None):
+                 errs.append('--------------------------------')
                  errs.append(ValueError(f"Required variable empty: {field}"))
     return errs
 
@@ -53,6 +60,7 @@ def validate_all_elements(cls, values):
          if 'element_required' in cls.__fields__[field].field_info.extra:
              required = cls.__fields__[field].field_info.extra['element_required']
              if required & (values[field] is None):
+                 errs.append('--------------------------------')
                  errs.append(ValueError(f"Required variable empty: {field}"))
       if len(errs) > 0:
           errors = "\n ".join([str(e).replace("\n", "\n  ") for e in errs])

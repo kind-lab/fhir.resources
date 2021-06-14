@@ -69,9 +69,9 @@ class Identifier(element.Element):
         ),
         # if property is element of this resource.
         element_property=True,
-        enum_values=['DL', 'PPN', 'BRN', 'MR', 'MCN', 'EN', 'TAX', 'NIIP',
-                   'PRN', 'MD', 'DR', 'ACSN', 'UDI', 'SNO', 'SB', 'PLAC',
-                   'FILL', 'JHN']
+        enum_code_values=['DL', 'PPN', 'BRN', 'MR', 'MCN', 'EN', 'TAX', 'NIIP',
+                    'PRN', 'MD', 'DR', 'ACSN', 'UDI', 'SNO', 'SB', 'PLAC',
+                    'FILL', 'JHN']
     )
 
     use: fhirtypes.Code = Field(
