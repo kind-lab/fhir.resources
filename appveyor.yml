@@ -1,3 +1,4 @@
+name: rfhir
 environment:
   matrix:
     - PYTHON: "C:\\Python36"

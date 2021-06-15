@@ -11,7 +11,7 @@ from pydantic import Field, root_validator
 from . import extension, fhirtypes
 
 
-class USCoreBirthSex(extension.Extension):
+class BirthSex(extension.Extension):
     """Disclaimer: Any field name ends with ``__ext`` doesn't part of
     Resource StructureDefinition, instead used to enable Extensibility feature
     for FHIR Primitive Data Types.
@@ -20,7 +20,7 @@ class USCoreBirthSex(extension.Extension):
     Optional Extension Element - found in all resources.
     """
 
-    resource_type = Field("USCoreBirthSex", const=True)
+    resource_type = Field("BirthSex", const=True)
 
     url: fhirtypes.Uri = Field(
         None,
